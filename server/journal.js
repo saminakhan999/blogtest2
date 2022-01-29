@@ -12,7 +12,6 @@ class journalEntry {
         return Entries
     }
 
-    // Method for creating a new entry
     static createEntry(entry) {
         const newEntry = new journalEntry({
             id: journalData.length + 1,
@@ -22,7 +21,6 @@ class journalEntry {
         return newEntry
     }
 
-    // function to return an id
     static getId(id) {
         return journalData[id-1]
         
