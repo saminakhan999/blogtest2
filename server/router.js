@@ -55,7 +55,7 @@ router.post("/blog", (req,res) => {
 //Create Blog Comment 
 
 router.post("/blog/:id",(req,res)=>{
-    const thisBlog = req.params.id 
+    const thisBlog = blog[req.params.id -1] 
     const thisComment = thisBlog.comment
     const newComment = {
         id: thisComment.length + 1,
@@ -67,7 +67,9 @@ router.post("/blog/:id",(req,res)=>{
 
 
 
-// Edit a blog post 
+// Edit a blog post (not working :( )
+
+/*
 
 router.patch('/blog/:id', (req,res) => {
     let upBlog = req.body
@@ -75,16 +77,15 @@ router.patch('/blog/:id', (req,res) => {
     let matchingBlog = blog.find((posttt) => posttt.id === requestedId);
    
 
-    let updatedBlog = { ...matchingBlog, ...upBlog }
+    updatedBlog = { ...matchingBlog, ...upBlog }
      
     let blogIdx = blog.indexOf(matchingBlog)
-    console.log(blogIdx)
     
     blog = [ ...blog.slice(0, blogIdx), updatedBlog, ...blog.slice(blogIdx + 1)]
     
     res.json(updatedBlog)
 })
-    /*
+    
 
     const upBlog = req.body;
     const upBlogg = () => {
@@ -97,8 +98,8 @@ router.patch('/blog/:id', (req,res) => {
     upBlogg() 
     res.json('this blog has been updated');
  
-   // );
-   // }
+   );
+}
    */
 
 
@@ -123,5 +124,4 @@ router.delete("/blog/:id", (req, res) => {
 })
 
 module.exports = router;
-
 
