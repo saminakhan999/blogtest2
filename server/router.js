@@ -1,29 +1,40 @@
-const express = require("express");
+const express =require("express");
+const blog = require("./data.js")
 const router = express.Router();
-const journalData = require("./data")
-const journalEntry = require("./journal")
 
-router.get("/" , (req,res) => {
-    res.send("Hello World")
-})
+// add -1 to all ids
 
-router.get("/journal" , (req,res) => {
-    res.send(journalData)
+router.get("/", (req,res) => {
+    res.send("Hello world")
 })
 
 
-router.get("/journal/:id", (req,res) => {
-    res.send(journalData[req.params.id -1])
+router.get("/blog", (req, res) => {
+    res.send(blog)
 })
 
 
-router.post("/journal", (req,res) => {
-    console.log("Route reached");
-    const data = req.body;
-    const newEntry = journalEntry.createEntry(data)
-    console.log("New entry")
-    res.send(`Added a new journal entry!`);
+router.get("/blog/:id", (req, res) => {
+    res.send(blog.filter(blog => blog.id === parseInt(req.params.id)))
 })
 
+router.get("/blog/:id/comment", (req, res) => {
+    res.send(blog[req.params.id].comment)
+})
+
+router.get("/blog/:id/emoji/:id", (req,res) => {
+    res.send(blog[req.params.id].emoji[req.params.id])
+})
+
+
+router.delete("/blog/:id", (req, res) => {
+    const id = req.params.id
+    const blogIndex= blog.findIndex(p => p.id == id);
+
+    blog.splice(blogIndex,1);
+    res.send('blog entry has been deleted')
+})
 
 module.exports = router;
+
+
