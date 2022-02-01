@@ -70,8 +70,7 @@ router.post("/blog", (req,res) => {
         newBlog.emoji["3"] = emojiThree
         blog[id] = newBlog
 
-        console.log(blog)
-        res.json('new blog post has been created')
+        res.json(blog)
     })
 
 
@@ -89,7 +88,7 @@ router.post("/blog/:id",(req,res)=>{
         thisComment[id] = newComment
         console.log(blog)
 
-        res.json('new comment has been added')
+        res.json(newComment)
 
 })
 
