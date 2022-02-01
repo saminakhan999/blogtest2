@@ -2,12 +2,14 @@
     "1":{
     "blogtitle": "Ostriches dont exist",
     "blogcontent": "Scientists recently discovered that ostriches are just a large form of pigeon....",
-    "date": "Sat, 29 Jan 2022 11:45:33 GMT",
+    "timestamp": "Sat, 29 Jan 2022 11:45:33 GMT",
     "gif": "",
     "comment": {"1":{
-        "blogcomment": "Hiiii"
+        "blogcomment": "Hiiii",
+        "timestamp": "Sat, 29 Jan 2022 11:48:37 GMT"
     }, "2":{
-        "blogcomment": "Yoooooo"
+        "blogcomment": "Yoooooo",
+        "timestamp": "Sat, 29 Jan 2022 12:22:07 GMT"
     }},
     "emoji": {"1":{"emojiCount": 100 }, "2":{"emojiCount": 33}, "3":{"emojiCount": 11}}
     },
@@ -16,12 +18,15 @@
     "2":{
     "blogtitle": "Are Aliens real?",
     "blogcontent": "I never thought Aliens could be real...",
-    "date": "Sun, 30 Jan 2022 10:34:46 GMT",
+    "timestamp": "Sun, 30 Jan 2022 10:34:46 GMT",
     "gif": "",
     "comment": {"1":{
-        "blogcomment": "HAHAHAHAA"
+        "blogcomment": "HAHAHAHAA",
+        "timestamp": "Sun, 30 Jan 2022 11:07:55 GMT"
+        
     }, "2":{
-        "blogcomment": "GOOD ONE!!!"
+        "blogcomment": "GOOD ONE!!!",
+        "timestamp": "Sun, 30 Jan 2022 11:55:44 GMT"
     }},
     "emoji": {"1":{"emojiCount": 67 }, "2":{"emojiCount": 70}, "3":{"emojiCount": 0}}
     },
@@ -29,12 +34,14 @@
     "3":{ 
     "blogtitle": "My brother believes in Aliens",
     "blogcontent": "...",
-    "date": "Mon, 31 Jan 2022 12:04:22 GMT",
+    "timestamp": "Mon, 31 Jan 2022 12:04:22 GMT",
     "gif": "",
     "comment": {"1":{
-        "blogcomment": "Testing"
+        "blogcomment": "Testing",
+        "timestamp": "Mon, 31 Jan 2022 12:12:12 GMT"
     }, "2":{
-        "blogcomment": "I am troll"
+        "blogcomment": "I am troll",
+        "timestamp": "Mon, 31 Jan 2022 12:17:10 GMT"
     }},
     "emoji": {"1":{"emojiCount": 160 }, "2":{"emojiCount": 3}, "3":{"emojiCount": 566}}
     }

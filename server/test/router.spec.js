@@ -87,12 +87,10 @@ describe('Blog posts', () => {
 
     test('Increase the emoji count by 1', (done) => {
         request(router)
-        .patch('/blog/1/emoji/2')
+        .patch('/blog/1/emoji/1')
         .expect('Content-Type', /json/)
-        .expect((res) => {
-            {emojiCount: 103}
-        })
-        .expect(200, done)
+        .expect( 200)
+        .expect({emojiCount: 101}, done)
 
     });
 

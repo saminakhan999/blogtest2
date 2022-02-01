@@ -23,7 +23,6 @@ app.get("/blog", (req, res) => {
 //Access specific blog post //
 
 app.get("/blog/:id", (req, res) => {
-   // res.json(blog.filter(blog => blog.id === parseInt(req.params.id)))
    res.json(blog[req.params.id])
 })
 
@@ -142,13 +141,30 @@ app.patch("/blog/:id/emoji/:eid", (req, res) => {
 //Delete a specific blog post 
 
 app.delete("/blog/:id", (req, res) => {
-    const thisBloggg = blog[req.params.id]
-    console.log(thisBloggg)
-    //delete thisBlog 
-    /*const blogIndex= blog.findIndex(p => p.id == id);
-    blog.splice(blogIndex,1); */
-    res.status(204).json('blog entry has been deleted')
+    let thisBloggg = blog[req.params.id]
+    for (member in thisBloggg){
+        delete thisBloggg[member];
+    }
+    thisBloggg['Alert'] = "This blog has been deleted";
+    res.status(200).json("Blog has been deleted");
+
 })
+
+// Delete a specific Comment 
+
+app.delete('/blog/:id/comment/:bid', (req,res) => {
+    const thisBlog = blog[req.params.id] 
+    const comments = thisBlog.comment
+    let oneComment = comments[req.params.bid]
+    for(member in oneComment){
+        delete oneComment[member]
+    }
+    oneComment['Alert'] = "This comment has been deleted";
+
+    res.status(200).json('this comment has been deleted')
+
+})
+
 
 
 module.exports = app;

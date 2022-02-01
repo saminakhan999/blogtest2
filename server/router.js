@@ -54,7 +54,7 @@ router.post("/blog", (req,res) => {
         const newBlog = {
             blogtitle: req.body.blogtitle,
             blogcontent: req.body.blogcontent,
-            date: dayjs().toString(),
+            timestamp: dayjs().toString(),
             gif: req.body.gif,
             comment: ''
         }
@@ -81,7 +81,8 @@ router.post("/blog/:id",(req,res)=>{
         const thisBlog = blog[req.params.id] 
         const thisComment = thisBlog.comment
         const newComment = {
-            blogcomment: req.body.blogcomment
+            blogcomment: req.body.blogcomment,
+            timestamp: dayjs().toString()
         }
         let id = Math.max(...Object.keys(thisComment)) +1
 
@@ -140,17 +141,16 @@ router.patch("/blog/:id/emoji/:eid", (req, res) => {
 
 router.delete("/blog/:id", (req, res) => {
     let thisBloggg = blog[req.params.id]
-    let deleted;
     for (member in thisBloggg){
         delete thisBloggg[member];
     }
     thisBloggg['Alert'] = "This blog has been deleted";
-    //console.log(thisBloggg)
     res.json("Blog has been deleted");
 
-  
-    //res.json('blog entry has been deleted')
 })
+
+// Delete a specific Comment 
+
 router.delete('/blog/:id/comment/:bid', (req,res) => {
     const thisBlog = blog[req.params.id] 
     const comments = thisBlog.comment
@@ -159,10 +159,7 @@ router.delete('/blog/:id/comment/:bid', (req,res) => {
         delete oneComment[member]
     }
     oneComment['Alert'] = "This comment has been deleted";
-    
-    /*oneComment.blogcomment = upBlogComment.blogcomment ? upBlogComment.blogcomment : oneComment.blogcomment;*/
 
-    
     res.json('this comment has been deleted')
 
 })
