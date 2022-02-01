@@ -70,7 +70,7 @@ router.post("/blog", (req,res) => {
         newBlog.emoji["3"] = emojiThree
         blog[id] = newBlog
 
-        res.json(blog)
+        res.status(201).json(blog)
     })
 
 
@@ -86,9 +86,8 @@ router.post("/blog/:id",(req,res)=>{
         let id = Math.max(...Object.keys(thisComment)) +1
 
         thisComment[id] = newComment
-        console.log(blog)
 
-        res.json(newComment)
+        res.status(201).json(newComment)
 
 })
 
@@ -109,7 +108,7 @@ router.patch('/blog/:id', (req,res) => {
  
 
     
-    res.json('this blog has been updated')
+    res.json(thisBlog)
 })
 
 // Edit a Comment
@@ -123,7 +122,7 @@ router.patch('/blog/:id/comment/:bid', (req,res) => {
     const oneComment = comments[req.params.bid]
     oneComment.blogcomment = upBlogComment.blogcomment ? upBlogComment.blogcomment : oneComment.blogcomment;
     
-    res.json('this comment has been updated')
+    res.json(oneComment)
 })
 
 
@@ -134,7 +133,7 @@ router.patch("/blog/:id/emoji/:eid", (req, res) => {
     const thisBlog = blog[req.params.id]
     const emoji = thisBlog.emoji 
     emojiCount = emoji[req.params.eid].emojiCount++
-    res.json("emoji count has been updated") 
+    res.json(emoji[req.params.eid]) 
 }) 
 
 //Delete a specific blog post 
@@ -145,7 +144,7 @@ router.delete("/blog/:id", (req, res) => {
     //delete thisBlog 
     /*const blogIndex= blog.findIndex(p => p.id == id);
     blog.splice(blogIndex,1); */
-    res.json('blog entry has been deleted')
+    res.status(204).json('blog entry has been deleted')
 })
 
 // All CRUD implemented --

@@ -9,6 +9,7 @@ app.use(cors());
 app.use("/", router)
 
 
+
 app.get("/", (req,res) => {
     res.json("Hello world")
 })
@@ -72,7 +73,7 @@ app.post("/blog", (req,res) => {
         newBlog.emoji["3"] = emojiThree
         blog[id] = newBlog
 
-        res.json(blog)
+        res.status(201).json(blog)
     })
 
 
@@ -89,7 +90,7 @@ app.post("/blog/:id",(req,res)=>{
 
         thisComment[id] = newComment
 
-        res.json(newComment)
+        res.status(201).json(newComment)
 
 })
 
@@ -110,7 +111,7 @@ app.patch('/blog/:id', (req,res) => {
  
 
     
-    res.json('this blog has been updated')
+    res.json(thisBlog)
 })
 
 // Edit a Comment
@@ -124,7 +125,7 @@ app.patch('/blog/:id/comment/:bid', (req,res) => {
     const oneComment = comments[req.params.bid]
     oneComment.blogcomment = upBlogComment.blogcomment ? upBlogComment.blogcomment : oneComment.blogcomment;
     
-    res.json('this comment has been updated')
+    res.json(oneComment)
 })
 
 
@@ -135,7 +136,7 @@ app.patch("/blog/:id/emoji/:eid", (req, res) => {
     const thisBlog = blog[req.params.id]
     const emoji = thisBlog.emoji 
     emojiCount = emoji[req.params.eid].emojiCount++
-    res.json("emoji count has been updated") 
+    res.json(emoji[req.params.eid]) 
 }) 
 
 //Delete a specific blog post 
@@ -146,7 +147,7 @@ app.delete("/blog/:id", (req, res) => {
     //delete thisBlog 
     /*const blogIndex= blog.findIndex(p => p.id == id);
     blog.splice(blogIndex,1); */
-    res.json('blog entry has been deleted')
+    res.status(204).json('blog entry has been deleted')
 })
 
 
