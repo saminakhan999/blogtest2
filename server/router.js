@@ -55,7 +55,7 @@ router.post("/blog", (req,res) => {
             blogtitle: req.body.blogtitle,
             blogcontent: req.body.blogcontent,
             date: dayjs().toString(),
-            gif: '',
+            gif: req.body.gif,
             comment: ''
         }
 
@@ -92,7 +92,6 @@ router.post("/blog/:id",(req,res)=>{
 })
 
 
-
 // Edit a blog post 
 
 
@@ -105,6 +104,7 @@ router.patch('/blog/:id', (req,res) => {
     console.log(thisBlog.blogtitle)
     thisBlog.blogtitle = upBlog.blogtitle ? upBlog.blogtitle : thisBlog.blogtitle;
     thisBlog.blogcontent = upBlog.blogcontent ? upBlog.blogcontent : thisBlog.blogcontent;
+    thisBlog.gif = upBlog.gif ? upBlog.gif : thisBlog.gif;
  
 
     
@@ -139,12 +139,32 @@ router.patch("/blog/:id/emoji/:eid", (req, res) => {
 //Delete a specific blog post 
 
 router.delete("/blog/:id", (req, res) => {
-    const thisBloggg = blog[req.params.id]
-    console.log(thisBloggg)
-    //delete thisBlog 
-    /*const blogIndex= blog.findIndex(p => p.id == id);
-    blog.splice(blogIndex,1); */
-    res.status(204).json('blog entry has been deleted')
+    let thisBloggg = blog[req.params.id]
+    let deleted;
+    for (member in thisBloggg){
+        delete thisBloggg[member];
+    }
+    thisBloggg['Alert'] = "This blog has been deleted";
+    //console.log(thisBloggg)
+    res.json("Blog has been deleted");
+
+  
+    //res.json('blog entry has been deleted')
+})
+router.delete('/blog/:id/comment/:bid', (req,res) => {
+    const thisBlog = blog[req.params.id] 
+    const comments = thisBlog.comment
+    let oneComment = comments[req.params.bid]
+    for(member in oneComment){
+        delete oneComment[member]
+    }
+    oneComment['Alert'] = "This comment has been deleted";
+    
+    /*oneComment.blogcomment = upBlogComment.blogcomment ? upBlogComment.blogcomment : oneComment.blogcomment;*/
+
+    
+    res.json('this comment has been deleted')
+
 })
 
 // All CRUD implemented --
