@@ -1,5 +1,5 @@
 const express =require("express");
-const blog = require("./data.js")
+const blog = require("./data.json")
 const router = express.Router();
 const dayjs = require("dayjs");
 var relativeTime = require('dayjs/plugin/relativeTime')
@@ -17,121 +17,135 @@ router.get("/blog", (req, res) => {
     res.json(blog)
 })
 
-//Access specific blog post 
+//Access specific blog post //
 
 router.get("/blog/:id", (req, res) => {
-    res.json(blog.filter(blog => blog.id === parseInt(req.params.id)))
+   // res.json(blog.filter(blog => blog.id === parseInt(req.params.id)))
+   res.json(blog[req.params.id])
 })
 
-//Access comment for a blog post 
+//Access comments for a blog post 
 
 router.get("/blog/:id/comment", (req, res) => {
-    res.json(blog[req.params.id -1].comment)
+    res.json(blog[req.params.id].comment)
+})
+
+//Access individual comments for a blog post 
+
+router.get("/blog/:id/comment/:bid", (req, res) => {
+    const thisBlog = blog[req.params.id] 
+    const comments = thisBlog.comment
+    const oneComment = comments[req.params.bid]
+    res.json(oneComment)
 })
 
 //Access Emoji for a blog post 
 
 router.get("/blog/:id/emoji/:eid", (req,res) => {
-    res.json(blog[req.params.id -1].emoji[req.params.eid -1])
+    res.json(blog[req.params.id ].emoji[req.params.eid])
 })
 
 //Create Blog Entry 
 
 router.post("/blog", (req,res) => {
-    try {
+
+        let id = Math.max(...Object.keys(blog)) +1 
+
         const newBlog = {
-            id: blog.length + 1,
             blogtitle: req.body.blogtitle,
             blogcontent: req.body.blogcontent,
             date: dayjs().toString(),
             gif: '',
-            comment: [],
-            emoji: [{eid: 1, emojiCount: 0}, {eid: 2, emojiCount: 0}, {eid: 3, emojiCount: 0}]
+            comment: ''
         }
-        if(!newBlog.blogtitle || !newBlog.blogcontent) { throw new Error ('Please include all entries')}
-        blog.push(newBlog)
+
+        const emojiOne = {emojiCount: 0}
+        const emojiTwo = {emojiCount: 0}
+        const emojiThree = {emojiCount: 0}
+        
+        let emoji = 'emoji'
+        newBlog[emoji] = {};
+        newBlog.emoji["1"] = emojiOne
+        newBlog.emoji["2"] = emojiTwo
+        newBlog.emoji["3"] = emojiThree
+        blog[id] = newBlog
+
+        console.log(blog)
         res.json('new blog post has been created')
-    } catch (err) {
-        res.status(404).json({ message: err.message }
-        )
-    }
-})
+    })
 
 
 //Create Blog Comment 
 
 router.post("/blog/:id",(req,res)=>{
-    try {
-        const thisBlog = blog[req.params.id -1] 
+
+        const thisBlog = blog[req.params.id] 
         const thisComment = thisBlog.comment
         const newComment = {
-            id: thisComment.length + 1,
             blogcomment: req.body.blogcomment
         }
-        if (!newComment.blogcomment) {
-        throw new Error ('Please include a comment')}
-        thisComment.push(newComment) 
+        let id = Math.max(...Object.keys(thisComment)) +1
+
+        thisComment[id] = newComment
+        console.log(blog)
+
         res.json('new comment has been added')
-    } catch (err) {
-        res.status(404).json({ message: err.message }
-        )
-    }
+
 })
 
 
 
-// Edit a blog post (not working :( )
+// Edit a blog post 
 
-/*
+
 
 router.patch('/blog/:id', (req,res) => {
+
     let upBlog = req.body
-    let requestedId = req.params.id
-    let matchingBlog = blog.find((posttt) => posttt.id === requestedId);
-   
-
-    updatedBlog = { ...matchingBlog, ...upBlog }
-     
-    let blogIdx = blog.indexOf(matchingBlog)
-    
-    blog = [ ...blog.slice(0, blogIdx), updatedBlog, ...blog.slice(blogIdx + 1)]
-    
-    res.json(updatedBlog)
-})
-    
-
-    const upBlog = req.body;
-    const upBlogg = () => {
-    if(blog.id === parseInt(req.params.id)){
-        blog.blogtitle = upBlog.blogtitle ? upBlog.blogtitle : blog.blogtitle;
-        blog.blogcontent = upBlog.blogtitle ? upBlog.blogcontent : blog.blogcontent;
-        //blog.date = req.body.date;
-        //blog.gif = req.body.gif;
-    }}
-    upBlogg() 
-    res.json('this blog has been updated');
+    const thisBlog = blog[req.params.id] 
+    console.log(upBlog)
+    console.log(thisBlog.blogtitle)
+    thisBlog.blogtitle = upBlog.blogtitle ? upBlog.blogtitle : thisBlog.blogtitle;
+    thisBlog.blogcontent = upBlog.blogcontent ? upBlog.blogcontent : thisBlog.blogcontent;
  
-   );
-}
-   */
+
+    
+    res.json('this blog has been updated')
+})
+
+// Edit a Comment
+    
+
+router.patch('/blog/:id/comment/:bid', (req,res) => {
+
+    let upBlogComment = req.body
+    const thisBlog = blog[req.params.id] 
+    const comments = thisBlog.comment
+    const oneComment = comments[req.params.bid]
+    oneComment.blogcomment = upBlogComment.blogcomment ? upBlogComment.blogcomment : oneComment.blogcomment;
+    
+    res.json('this comment has been updated')
+})
 
 
 
 //Increase emoji count by 1 
 
 router.patch("/blog/:id/emoji/:eid", (req, res) => {
-    const thisBlog = blog[req.params.id -1]
+    const thisBlog = blog[req.params.id]
     const emoji = thisBlog.emoji 
-    emojiCount = emoji[req.params.eid-1].emojiCount++
+    emojiCount = emoji[req.params.eid].emojiCount++
     res.json("emoji count has been updated") 
 }) 
 
 //Delete a specific blog post 
 
 router.delete("/blog/:id", (req, res) => {
-    const id = req.params.id
-    const blogIndex= blog.findIndex(p => p.id == id);
-    blog.splice(blogIndex,1);
+    const thisBloggg = blog[req.params.id]
+    console.log(thisBloggg)
+    //delete thisBlog 
+    /*const blogIndex= blog.findIndex(p => p.id == id);
+    blog.splice(blogIndex,1); */
     res.json('blog entry has been deleted')
 })
 
