@@ -1,5 +1,5 @@
 const express =require("express")
-const blog = require("./data.js")
+const blog = require("./data.json")
 const app = express()
 const cors = require("cors")
 const router= require("./router.js")
