@@ -1,8 +1,11 @@
 const request = require('supertest');
-const router = require('../router');
+const router = require('../app.js');
+
+
 
 describe('Blog posts', () => {
     test('responds to GET / with a 200 on success', function(done) {
+        
         request(router)
             .get('/blog')
             .set('Accept', 'application/json')
@@ -15,7 +18,18 @@ describe('Blog posts', () => {
         request(router)
             .get('/blog/1')
             .expect(200)
-            .expect([{"id":1,"blogtitle":"Ostriches don't exist","blogcontent":"Scientists recently discovered that ostriches are just a large form of pigeon....","date":"Sat, 29 Jan 2022 11:45:33 GMT","gif":"","comment":[{"id":1,"blogcomment":"Hiiii"},{"id":2,"blogcomment":"Yoooooo"}],"emoji":[{"id":1,"emojiCount":100},{"id":2,"emojiCount":33},{"id":3,"emojiCount":11}]}], done);
+            .expect({
+                "blogtitle": "Ostriches dont exist",
+                "blogcontent": "Scientists recently discovered that ostriches are just a large form of pigeon....",
+                "date": "Sat, 29 Jan 2022 11:45:33 GMT",
+                "gif": "",
+                "comment": {"1":{
+                    "blogcomment": "Hiiii"
+                }, "2":{
+                    "blogcomment": "Yoooooo"
+                }},
+                "emoji": {"1":{"emojiCount": 100 }, "2":{"emojiCount": 33}, "3":{"emojiCount": 11}}
+                }, done);
     });
 
     test('retrieves blog comments by id', (done) => {
