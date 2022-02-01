@@ -11,7 +11,7 @@
         "blogcomment": "Yoooooo",
         "timestamp": "Sat, 29 Jan 2022 12:22:07 GMT"
     }},
-    "emoji": {"1":{"emojiCount": 100 }, "2":{"emojiCount": 33}, "3":{"emojiCount": 11}}
+    "emoji": {"1":{"emojiCount": 231 }, "2":{"emojiCount": 175}, "3":{"emojiCount": 98}}
     },
 
 
@@ -28,7 +28,7 @@
         "blogcomment": "GOOD ONE!!!",
         "timestamp": "Sun, 30 Jan 2022 11:55:44 GMT"
     }},
-    "emoji": {"1":{"emojiCount": 67 }, "2":{"emojiCount": 70}, "3":{"emojiCount": 0}}
+    "emoji": {"1":{"emojiCount": 167 }, "2":{"emojiCount": 134}, "3":{"emojiCount": 122}}
     },
 
     "3":{ 
@@ -37,13 +37,13 @@
     "timestamp": "Mon, 31 Jan 2022 12:04:22 GMT",
     "gif": "",
     "comment": {"1":{
-        "blogcomment": "Testing",
+        "blogcomment": "Ratio",
         "timestamp": "Mon, 31 Jan 2022 12:12:12 GMT"
     }, "2":{
-        "blogcomment": "I am troll",
+        "blogcomment": "It's true I do!!!",
         "timestamp": "Mon, 31 Jan 2022 12:17:10 GMT"
     }},
-    "emoji": {"1":{"emojiCount": 160 }, "2":{"emojiCount": 3}, "3":{"emojiCount": 566}}
+    "emoji": {"1":{"emojiCount": 160 }, "2":{"emojiCount": 133}, "3":{"emojiCount": 276}}
     }
 }
 

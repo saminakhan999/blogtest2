@@ -7,6 +7,7 @@ dayjs.extend(relativeTime)
 
 
 
+
 router.get("/", (req,res) => {
     res.json("Hello world")
 })
@@ -54,7 +55,7 @@ router.post("/blog", (req,res) => {
         const newBlog = {
             blogtitle: req.body.blogtitle,
             blogcontent: req.body.blogcontent,
-            timestamp: dayjs().toString(),
+            timestamp: dayjs().format('DD/MM/YYYY ' + 'hh:mm:ss').toString(),
             gif: req.body.gif,
             comment: ''
         }
@@ -82,7 +83,7 @@ router.post("/blog/:id",(req,res)=>{
         const thisComment = thisBlog.comment
         const newComment = {
             blogcomment: req.body.blogcomment,
-            timestamp: dayjs().toString()
+            timestamp: dayjs().format('DD/MM/YYYY ' + 'hh:mm:ss').toString(),
         }
         let id = Math.max(...Object.keys(thisComment)) +1
 
