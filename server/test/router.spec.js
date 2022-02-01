@@ -2,9 +2,8 @@ const request = require('supertest');
 const app = require('../app.js');
 const dayjs = require("dayjs");
 var relativeTime = require('dayjs/plugin/relativeTime')
-var utc = require('dayjs/plugin/utc');
 dayjs.extend(relativeTime)
-dayjs.extend(utc)
+
 
 
 // GET
@@ -18,14 +17,14 @@ describe('GET all blog posts', () => {
             "1":{
             "blogtitle": "Ostriches dont exist",
             "blogcontent": "Scientists recently discovered that ostriches are just a large form of pigeon....",
-            "timestamp": "Sat, 29 Jan 2022 11:45:33 GMT",
+            "timestamp": "29/01/2022 11:45:33",
             "gif": "",
             "comment": {"1":{
                 "blogcomment": "Hiiii",
-                "timestamp": "Sat, 29 Jan 2022 11:48:37 GMT"
+                "timestamp": "29/01/2022 11:48:37"
             }, "2":{
                 "blogcomment": "Yoooooo",
-                "timestamp": "Sat, 29 Jan 2022 12:22:07 GMT"
+                "timestamp": "29/01/2022 12:22:07"
             }},
             "emoji": {"1":{"emojiCount": 231 }, "2":{"emojiCount": 175}, "3":{"emojiCount": 98}}
             },
@@ -34,15 +33,15 @@ describe('GET all blog posts', () => {
             "2":{
             "blogtitle": "Are Aliens real?",
             "blogcontent": "I never thought Aliens could be real...",
-            "timestamp": "Sun, 30 Jan 2022 10:34:46 GMT",
+            "timestamp": "30/01/2022 10:34:46",
             "gif": "",
             "comment": {"1":{
                 "blogcomment": "HAHAHAHAA",
-                "timestamp": "Sun, 30 Jan 2022 11:07:55 GMT"
+                "timestamp": "30/01/2022 11:07:55"
                 
             }, "2":{
                 "blogcomment": "GOOD ONE!!!",
-                "timestamp": "Sun, 30 Jan 2022 11:55:44 GMT"
+                "timestamp": "30/01/2022 11:55:44"
             }},
             "emoji": {"1":{"emojiCount": 167 }, "2":{"emojiCount": 134}, "3":{"emojiCount": 122}}
             },
@@ -50,14 +49,14 @@ describe('GET all blog posts', () => {
             "3":{ 
             "blogtitle": "My brother believes in Aliens",
             "blogcontent": "...",
-            "timestamp": "Mon, 31 Jan 2022 12:04:22 GMT",
+            "timestamp": "31/01/2022 12:04:22",
             "gif": "",
             "comment": {"1":{
                 "blogcomment": "Ratio",
-                "timestamp": "Mon, 31 Jan 2022 12:12:12 GMT"
+                "timestamp": "31/01/2022 12:12:12"
             }, "2":{
                 "blogcomment": "It's true I do!!!",
-                "timestamp": "Mon, 31 Jan 2022 12:17:10 GMT"
+                "timestamp": "31/01/2022 12:17:10"
             }},
             "emoji": {"1":{"emojiCount": 160 }, "2":{"emojiCount": 133}, "3":{"emojiCount": 276}}
             }
@@ -89,14 +88,14 @@ describe('GET specific blog post', () => {
         .expect({ 
             "blogtitle": "My brother believes in Aliens",
             "blogcontent": "...",
-            "timestamp": "Mon, 31 Jan 2022 12:04:22 GMT",
+            "timestamp": "31/01/2022 12:04:22",
             "gif": "",
             "comment": {"1":{
                 "blogcomment": "Ratio",
-                "timestamp": "Mon, 31 Jan 2022 12:12:12 GMT"
+                "timestamp": "31/01/2022 12:12:12"
             }, "2":{
                 "blogcomment": "It's true I do!!!",
-                "timestamp": "Mon, 31 Jan 2022 12:17:10 GMT"
+                "timestamp": "31/01/2022 12:17:10"
             }},
             "emoji": {"1":{"emojiCount": 160 }, "2":{"emojiCount": 133}, "3":{"emojiCount": 276}}
             }, done)
@@ -122,16 +121,13 @@ describe('GET all comments from a blog post', () => {
     test('responds with correct data', (done) => {
         request(app)
         .get('/blog/1/comment')
-        .expect({
-            "1": {
-              "blogcomment": "Hiiii",
-              "timestamp": "Sat, 29 Jan 2022 11:48:37 GMT"
-            },
-            "2": {
-              "blogcomment": "Yoooooo",
-              "timestamp": "Sat, 29 Jan 2022 12:22:07 GMT"
-            }
-          }, done)
+        .expect({"1":{
+            "blogcomment": "Hiiii",
+            "timestamp": "29/01/2022 11:48:37"
+        }, "2":{
+            "blogcomment": "Yoooooo",
+            "timestamp": "29/01/2022 12:22:07"
+        }}, done)
     });
 
     test('responds with json', (done) => {
@@ -157,7 +153,7 @@ describe('GET individual comments from blog post', () => {
         .get('/blog/1/comment/1')
         .expect({
             "blogcomment": "Hiiii",
-            "timestamp": "Sat, 29 Jan 2022 11:48:37 GMT"
+            "timestamp": "29/01/2022 11:48:37"
           }, done)
     });
 
@@ -296,16 +292,16 @@ describe('PATCH Edit a blog post', () => {
         .expect({
             blogtitle: 'this is a blog title test',
             blogcontent: 'this is a blog content test',
-            timestamp: 'Sun, 30 Jan 2022 10:34:46 GMT',
+            timestamp: '30/01/2022 10:34:46',
             gif: '',
             comment: {
               '1': {
                 blogcomment: 'HAHAHAHAA',
-                timestamp: 'Sun, 30 Jan 2022 11:07:55 GMT'
+                timestamp: '30/01/2022 11:07:55'
               },
               '2': {
                 blogcomment: 'GOOD ONE!!!',
-                timestamp: 'Sun, 30 Jan 2022 11:55:44 GMT'
+                timestamp: '30/01/2022 11:55:44'
               }
             },
             emoji: {
@@ -340,7 +336,7 @@ describe('PATCH Edit a comment', () => {
         .send({blogcomment: "this is a blog comment test"})
         .expect({
             "blogcomment": "this is a blog comment test",
-            "timestamp": "Sat, 29 Jan 2022 11:48:37 GMT"
+            "timestamp": "29/01/2022 11:48:37"
           }, done)
     });
 
@@ -390,7 +386,7 @@ describe('PATCH Increase the emoji count by 1', () => {
 
 describe('DELETE blog post', () => {
     test('responds with status code 204', (done) => {
-        request(router)
+        request(app)
         .delete('/blog/1')
         .expect(204, done);
     });
@@ -399,7 +395,7 @@ describe('DELETE blog post', () => {
 
 describe('DELETE comment on blog post', () => {
     test('responds with status code 204', (done) => {
-        request(router)
+        request(app)
         .delete('/blog/2/comment/2')
         .expect(204, done);
     });
