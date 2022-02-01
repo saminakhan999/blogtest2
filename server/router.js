@@ -38,31 +38,44 @@ router.get("/blog/:id/emoji/:eid", (req,res) => {
 //Create Blog Entry 
 
 router.post("/blog", (req,res) => {
-    //function for creating blog entry
-    const newBlog = {
-        id: blog.length + 1,
-        blogtitle: req.body.blogtitle,
-        blogcontent: req.body.blogcontent,
-        date: dayjs().toString(),
-        gif: '',
-        comment: [],
-        emoji: [{eid: 1, emojiCount: 0}, {eid: 2, emojiCount: 0}, {eid: 3, emojiCount: 0}]
+    try {
+        const newBlog = {
+            id: blog.length + 1,
+            blogtitle: req.body.blogtitle,
+            blogcontent: req.body.blogcontent,
+            date: dayjs().toString(),
+            gif: '',
+            comment: [],
+            emoji: [{eid: 1, emojiCount: 0}, {eid: 2, emojiCount: 0}, {eid: 3, emojiCount: 0}]
+        }
+        if(!newBlog.blogtitle || !newBlog.blogcontent) { throw new Error ('Please include all entries')}
+        blog.push(newBlog)
+        res.json('new blog post has been created')
+    } catch (err) {
+        res.status(404).json({ message: err.message }
+        )
     }
-    blog.push(newBlog)
-    res.json('new blog post has been created')
-}) 
+})
+
 
 //Create Blog Comment 
 
 router.post("/blog/:id",(req,res)=>{
-    const thisBlog = blog[req.params.id -1] 
-    const thisComment = thisBlog.comment
-    const newComment = {
-        id: thisComment.length + 1,
-        blogcomment: req.body.blogcomment
+    try {
+        const thisBlog = blog[req.params.id -1] 
+        const thisComment = thisBlog.comment
+        const newComment = {
+            id: thisComment.length + 1,
+            blogcomment: req.body.blogcomment
+        }
+        if (!newComment.blogcomment) {
+        throw new Error ('Please include a comment')}
+        thisComment.push(newComment) 
+        res.json('new comment has been added')
+    } catch (err) {
+        res.status(404).json({ message: err.message }
+        )
     }
-    thisComment.push(newComment) 
-    res.json('new comment has been added')
 })
 
 
@@ -110,7 +123,6 @@ router.patch("/blog/:id/emoji/:eid", (req, res) => {
     const thisBlog = blog[req.params.id -1]
     const emoji = thisBlog.emoji 
     emojiCount = emoji[req.params.eid-1].emojiCount++
-
     res.json("emoji count has been updated") 
 }) 
 
@@ -123,5 +135,8 @@ router.delete("/blog/:id", (req, res) => {
     res.json('blog entry has been deleted')
 })
 
+// All CRUD implemented --
+
 module.exports = router;
+
 
