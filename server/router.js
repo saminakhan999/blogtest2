@@ -70,7 +70,7 @@ router.post("/blog", (req,res) => {
         newBlog.emoji["3"] = emojiThree
         blog[id] = newBlog
 
-        res.status(201).json(blog)
+        res.status(201).json(newBlog)
     })
 
 
@@ -101,8 +101,6 @@ router.patch('/blog/:id', (req,res) => {
 
     let upBlog = req.body
     const thisBlog = blog[req.params.id] 
-    console.log(upBlog)
-    console.log(thisBlog.blogtitle)
     thisBlog.blogtitle = upBlog.blogtitle ? upBlog.blogtitle : thisBlog.blogtitle;
     thisBlog.blogcontent = upBlog.blogcontent ? upBlog.blogcontent : thisBlog.blogcontent;
     thisBlog.gif = upBlog.gif ? upBlog.gif : thisBlog.gif;
@@ -145,7 +143,7 @@ router.delete("/blog/:id", (req, res) => {
         delete thisBloggg[member];
     }
     thisBloggg['Alert'] = "This blog has been deleted";
-    res.json("Blog has been deleted");
+    res.status(204).json("Blog has been deleted");
 
 })
 
@@ -160,7 +158,7 @@ router.delete('/blog/:id/comment/:bid', (req,res) => {
     }
     oneComment['Alert'] = "This comment has been deleted";
 
-    res.json('this comment has been deleted')
+    res.status(204).json('this comment has been deleted')
 
 })
 

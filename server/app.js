@@ -23,6 +23,7 @@ app.get("/blog", (req, res) => {
 //Access specific blog post //
 
 app.get("/blog/:id", (req, res) => {
+   // res.json(blog.filter(blog => blog.id === parseInt(req.params.id)))
    res.json(blog[req.params.id])
 })
 
@@ -56,8 +57,8 @@ app.post("/blog", (req,res) => {
         const newBlog = {
             blogtitle: req.body.blogtitle,
             blogcontent: req.body.blogcontent,
-            date: dayjs().toString(),
-            gif: '',
+            timestamp: dayjs().toString(),
+            gif: req.body.gif,
             comment: ''
         }
 
@@ -72,7 +73,7 @@ app.post("/blog", (req,res) => {
         newBlog.emoji["3"] = emojiThree
         blog[id] = newBlog
 
-        res.status(201).json(blog)
+        res.status(201).json(newBlog)
     })
 
 
@@ -83,16 +84,17 @@ app.post("/blog/:id",(req,res)=>{
         const thisBlog = blog[req.params.id] 
         const thisComment = thisBlog.comment
         const newComment = {
-            blogcomment: req.body.blogcomment
+            blogcomment: req.body.blogcomment,
+            timestamp: dayjs().toString()
         }
         let id = Math.max(...Object.keys(thisComment)) +1
 
         thisComment[id] = newComment
+        console.log(newComment)
 
         res.status(201).json(newComment)
 
 })
-
 
 
 // Edit a blog post 
@@ -103,10 +105,9 @@ app.patch('/blog/:id', (req,res) => {
 
     let upBlog = req.body
     const thisBlog = blog[req.params.id] 
-    console.log(upBlog)
-    console.log(thisBlog.blogtitle)
     thisBlog.blogtitle = upBlog.blogtitle ? upBlog.blogtitle : thisBlog.blogtitle;
     thisBlog.blogcontent = upBlog.blogcontent ? upBlog.blogcontent : thisBlog.blogcontent;
+    thisBlog.gif = upBlog.gif ? upBlog.gif : thisBlog.gif;
  
 
     
@@ -146,7 +147,7 @@ app.delete("/blog/:id", (req, res) => {
         delete thisBloggg[member];
     }
     thisBloggg['Alert'] = "This blog has been deleted";
-    res.status(200).json("Blog has been deleted");
+    res.status(204).json("Blog has been deleted");
 
 })
 
@@ -161,10 +162,10 @@ app.delete('/blog/:id/comment/:bid', (req,res) => {
     }
     oneComment['Alert'] = "This comment has been deleted";
 
-    res.status(200).json('this comment has been deleted')
+    res.status(204).json('this comment has been deleted')
 
 })
 
-
+// All CRUD implemented --
 
 module.exports = app;
