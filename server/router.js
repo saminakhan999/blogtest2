@@ -2,8 +2,9 @@ const express =require("express");
 const blog = require("./data.json")
 const router = express.Router();
 const dayjs = require("dayjs");
-var relativeTime = require('dayjs/plugin/relativeTime')
+var relativeTime = require('dayjs/plugin/relativeTime');
 dayjs.extend(relativeTime)
+const Fuse = require('fuse.js')
 
 
 
@@ -192,6 +193,22 @@ router.delete('/blog/:id/comment/:bid', (req,res) => {
     res.status(204).json('this comment has been deleted')
 
 })
+
+//adding search function
+
+router.get("/search", (req,res) =>{
+    let query = req.query.q;
+    allBlogs = Object.values(blog);
+    const options = {
+        keys: ['blogtitle', "blogcontent"]
+      }
+      
+      const fuse = new Fuse(allBlogs, options)
+      
+      const result = fuse.search(query)
+      res.json(result)
+//add error handling  
+}) 
 
 // All CRUD implemented --
 
