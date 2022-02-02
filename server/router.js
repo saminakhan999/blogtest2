@@ -211,7 +211,7 @@ router.get("/search", (req,res) =>{
 //add error handling  
 }) 
 
-
+/*
  function escapeHtml(unsafe)
 {
     return unsafe
@@ -221,6 +221,8 @@ router.get("/search", (req,res) =>{
          .replace(/"/g, "&quot;")
          .replace(/'/g, "&#039;");
  }
+
+ */
 
 module.exports = router;
 
