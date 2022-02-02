@@ -4,7 +4,7 @@ const router = express.Router();
 const dayjs = require("dayjs");
 var relativeTime = require('dayjs/plugin/relativeTime');
 dayjs.extend(relativeTime)
-const fuse = require('fuse.js')
+const Fuse = require('fuse.js')
 
  
 
@@ -203,8 +203,8 @@ router.get("/search", (req,res) =>{
     const options = {
         keys: ['blogtitle']
       } 
-      const fusee = new fuse(allBlogs, options)
-      const result = fusee.search(query)
+      const fuse = new Fuse(allBlogs, options)
+      const result = fuse.search(query)
       res.json(result[0])
 }) 
 
