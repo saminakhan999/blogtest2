@@ -6,16 +6,6 @@ var relativeTime = require('dayjs/plugin/relativeTime');
 dayjs.extend(relativeTime)
 const Fuse = require('fuse.js')
 
-function escapeHtml(unsafe)
-{
-    return unsafe
-         .replace(/&/g, "&amp;")
-         .replace(/</g, "&lt;")
-         .replace(/>/g, "&gt;")
-         .replace(/"/g, "&quot;")
-         .replace(/'/g, "&#039;");
- }
-
  
 
 router.get("/", (req,res) => {
