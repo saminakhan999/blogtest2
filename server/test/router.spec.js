@@ -5,7 +5,6 @@ var relativeTime = require('dayjs/plugin/relativeTime')
 dayjs.extend(relativeTime)
 
 
-
 // GET
 
 describe('GET all blog posts', () => {
@@ -18,7 +17,7 @@ describe('GET all blog posts', () => {
             "blogtitle": "Ostriches dont exist",
             "blogcontent": "Scientists recently discovered that ostriches are just a large form of pigeon....",
             "timestamp": "29/01/2022 11:45:33",
-            "gif": "./ostrich.gif",
+            "gif": "https://media4.giphy.com/media/l1J9znYNISr0aEmze/giphy.webp?cid=112e516bj583yd2p34cuzg3zsicfoeokijom4c68tw0zkjvu&rid=giphy.webp&ct=g",
             "comment": {"1":{
                 "blogcomment": "Hiiii",
                 "timestamp": "29/01/2022 11:48:37"
@@ -34,7 +33,7 @@ describe('GET all blog posts', () => {
             "blogtitle": "Are Aliens real?",
             "blogcontent": "I never thought Aliens could be real...",
             "timestamp": "30/01/2022 10:34:46",
-            "gif": "",
+            "gif": "https://media2.giphy.com/media/gHcPh3ehbRGik/giphy.webp?cid=112e516bpll6jg8e3bkezhdzjedxlzxfr7z4eyle2f9fub23&rid=giphy.webp&ct=g",
             "comment": {"1":{
                 "blogcomment": "HAHAHAHAA",
                 "timestamp": "30/01/2022 11:07:55"
@@ -50,7 +49,7 @@ describe('GET all blog posts', () => {
             "blogtitle": "My brother believes in Aliens",
             "blogcontent": "...",
             "timestamp": "31/01/2022 12:04:22",
-            "gif": "",
+            "gif": "https://media0.giphy.com/media/3oEjI789af0AVurF60/giphy.webp?cid=112e516bf9nnnymdnva57g1ze6cg1c5uj0eje4wjqf2jm5qm&rid=giphy.webp&ct=g",
             "comment": {"1":{
                 "blogcomment": "Ratio",
                 "timestamp": "31/01/2022 12:12:12"
@@ -75,6 +74,7 @@ describe('GET all blog posts', () => {
         .expect(200, done)
     });
 
+
 });
 
 
@@ -89,7 +89,7 @@ describe('GET specific blog post', () => {
             "blogtitle": "My brother believes in Aliens",
             "blogcontent": "...",
             "timestamp": "31/01/2022 12:04:22",
-            "gif": "",
+            "gif": "https://media0.giphy.com/media/3oEjI789af0AVurF60/giphy.webp?cid=112e516bf9nnnymdnva57g1ze6cg1c5uj0eje4wjqf2jm5qm&rid=giphy.webp&ct=g",
             "comment": {"1":{
                 "blogcomment": "Ratio",
                 "timestamp": "31/01/2022 12:12:12"
@@ -111,6 +111,12 @@ describe('GET specific blog post', () => {
         request(app)
         .get('/blog/3')
         .expect(200, done)
+    });
+
+    test('if id unknown responds with status code 404', (done) => {
+        request(app)
+        .get('/blog/100')
+        .expect(404, done);
     });
 
 });
@@ -142,6 +148,12 @@ describe('GET all comments from a blog post', () => {
         .expect(200, done)
     });
 
+    test('if id unknown responds with status code 404', (done) => {
+        request(app)
+        .get('/blog/5/comment')
+        .expect(404, done);
+    });
+
 });
 
 
@@ -169,6 +181,12 @@ describe('GET individual comments from blog post', () => {
         .expect(200, done)
     });
 
+    test('if id unknown responds with status code 404', (done) => {
+        request(app)
+        .get('/blog/2/comment/200')
+        .expect(404, done);
+    });
+
 });
 
 
@@ -192,6 +210,12 @@ describe('GET Emoji from blog', () => {
         .expect(200, done)
     });
 
+    test('if id unknown responds with status code 404', (done) => {
+        request(app)
+        .get('/blog/2/emoji/100')
+        .expect(404, done);
+    });
+
 });
 
 
@@ -209,11 +233,11 @@ describe('POST Create a blog post', () => {
             "blogcontent": "this is a create blog content test"
           })
         .expect({
-            "blogtitle": "this is a create blog title test",
-            "blogcontent": "this is a create blog content test",
-            "timestamp": dayjs().format('DD/MM/YYYY ' + 'hh:mm:ss').toString(),
-            "comment": "",
-            "emoji": {
+            blogtitle: "this is a create blog title test",
+            blogcontent: "this is a create blog content test",
+            timestamp: dayjs().format('DD/MM/YYYY ' + 'hh:mm:ss').toString(),
+            comment: "",
+            emoji: {
               "1": {
                 "emojiCount": 0
               },
@@ -231,8 +255,8 @@ describe('POST Create a blog post', () => {
         request(app)
         .post('/blog')
         .send({
-            "blogtitle": "this is a create blog title test",
-        "blogcontent": "this is a create blog content test"
+            blogtitle: "this is a create blog title test",
+        blogcontent: "this is a create blog content test"
           })
         .expect('Content-Type', /json/, done)
     });
@@ -241,10 +265,18 @@ describe('POST Create a blog post', () => {
         request(app)
         .post('/blog')
         .send({
-            "blogtitle": "this is a create blog title test",
-            "blogcontent": "this is a create blog content test"
+            blogtitle: "this is a create blog title test",
+            blogcontent: "this is a create blog content test"
           })
         .expect(201, done)
+    });
+
+    test('if no requested title or content responds with status code 404', (done) => {
+        request(app)
+        .post('/blog')
+        .send({
+          })
+        .expect(404, done);
     });
 
 });
@@ -257,8 +289,8 @@ describe('POST Create a comment', () => {
         .post('/blog/3')
         .send({blogcomment: "this is a create blog comment test"})
         .expect({
-            "blogcomment": "this is a create blog comment test",
-            "timestamp": dayjs().format('DD/MM/YYYY ' + 'hh:mm:ss').toString()
+            blogcomment: "this is a create blog comment test",
+            timestamp: dayjs().format('DD/MM/YYYY ' + 'hh:mm:ss').toString()
           }, done)
     });
 
@@ -276,8 +308,15 @@ describe('POST Create a comment', () => {
         .expect(201, done)
     });
 
-});
+    test('if no requested comment responds with status code 404', (done) => {
+        request(app)
+        .post('/blog/3')
+        .send({
+          })
+        .expect(404, done);
+    });
 
+});
 
 
 
@@ -293,7 +332,7 @@ describe('PATCH Edit a blog post', () => {
             blogtitle: 'this is a blog title test',
             blogcontent: 'this is a blog content test',
             timestamp: '30/01/2022 10:34:46',
-            gif: '',
+            gif: 'https://media2.giphy.com/media/gHcPh3ehbRGik/giphy.webp?cid=112e516bpll6jg8e3bkezhdzjedxlzxfr7z4eyle2f9fub23&rid=giphy.webp&ct=g',
             comment: {
               '1': {
                 blogcomment: 'HAHAHAHAA',
