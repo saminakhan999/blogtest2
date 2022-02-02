@@ -4,9 +4,19 @@ const router = express.Router();
 const dayjs = require("dayjs");
 var relativeTime = require('dayjs/plugin/relativeTime');
 dayjs.extend(relativeTime)
-//const Fuse = require('fuse.js')
+const Fuse = require('fuse.js')
 
+function escapeHtml(unsafe)
+{
+    return unsafe
+         .replace(/&/g, "&amp;")
+         .replace(/</g, "&lt;")
+         .replace(/>/g, "&gt;")
+         .replace(/"/g, "&quot;")
+         .replace(/'/g, "&#039;");
+ }
 
+ 
 
 router.get("/", (req,res) => {
     res.json("Hello world")
@@ -194,34 +204,21 @@ router.delete('/blog/:id/comment/:bid', (req,res) => {
 
 })
 
-//adding search function
-/*
+// Search function
+
 router.get("/search", (req,res) =>{
     let query = req.query.q;
+    query = query.replace(/\+/g, ' ').toLowerCase().trim();
     allBlogs = Object.values(blog);
     const options = {
-        keys: ['blogtitle', "blogcontent"]
-      }
-      
+        keys: ['blogtitle']
+      } 
       const fuse = new Fuse(allBlogs, options)
-      
       const result = fuse.search(query)
-      res.json(result)
-//add error handling  
+      res.json(result[0])
 }) 
-*/
-/*
- function escapeHtml(unsafe)
-{
-    return unsafe
-         .replace(/&/g, "&amp;")
-         .replace(/</g, "&lt;")
-         .replace(/>/g, "&gt;")
-         .replace(/"/g, "&quot;")
-         .replace(/'/g, "&#039;");
- }
 
- */
+
 
 module.exports = router;
 
