@@ -4,7 +4,7 @@ const router = express.Router();
 const dayjs = require("dayjs");
 var relativeTime = require('dayjs/plugin/relativeTime');
 dayjs.extend(relativeTime)
-const Fuse = require('fuse.js')
+const fuse = require('fuse.js')
 
  
 
@@ -196,7 +196,6 @@ router.delete('/blog/:id/comment/:bid', (req,res) => {
 
 // Search function
 
-/*
 router.get("/search", (req,res) =>{
     let query = req.query.q;
     query = query.replace(/\+/g, ' ').toLowerCase().trim();
@@ -204,11 +203,11 @@ router.get("/search", (req,res) =>{
     const options = {
         keys: ['blogtitle']
       } 
-      const fuse = new Fuse(allBlogs, options)
-      const result = fuse.search(query)
+      const fusee = new fuse(allBlogs, options)
+      const result = fusee.search(query)
       res.json(result[0])
 }) 
-*/
+
 
 
 module.exports = router;
