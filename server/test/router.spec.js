@@ -1,108 +1,442 @@
 const request = require('supertest');
-const router = require('../app.js');
+const app = require('../app.js');
+const dayjs = require("dayjs");
+var relativeTime = require('dayjs/plugin/relativeTime')
+dayjs.extend(relativeTime)
 
 
+// GET
 
-describe('Blog posts', () => {
-    test('responds to GET / with a 200 on success', function(done) {
-        
-        request(router)
-            .get('/blog')
-            .set('Accept', 'application/json')
-            .expect('Content-Type', /json/)
-            .expect(200, done);
-    });
+describe('GET all blog posts', () => {
 
-
-    test('retrieves a blog post by id', (done) => {
-        request(router)
-            .get('/blog/1')
-            .expect(200)
-            .expect({
-                "blogtitle": "Ostriches dont exist",
-                "blogcontent": "Scientists recently discovered that ostriches are just a large form of pigeon....",
-                "date": "Sat, 29 Jan 2022 11:45:33 GMT",
-                "gif": "",
-                "comment": {"1":{
-                    "blogcomment": "Hiiii"
-                }, "2":{
-                    "blogcomment": "Yoooooo"
-                }},
-                "emoji": {"1":{"emojiCount": 100 }, "2":{"emojiCount": 33}, "3":{"emojiCount": 11}}
-                }, done);
-    });
-
-    test('retrieves blog comments by id', (done) => {
-        request(router)
-            .get('/blog/2/comment')
-            .expect(200)
-            .expect({"1":{
-                "blogcomment": "HAHAHAHAA"
+    test('responds with correct data', (done) => {
+        request(app)
+        .get('/blog')
+        .expect({
+            "1":{
+            "blogtitle": "Ostriches dont exist",
+            "blogcontent": "Scientists recently discovered that ostriches are just a large form of pigeon....",
+            "timestamp": "29/01/2022 11:45:33",
+            "gif": "https://media4.giphy.com/media/l1J9znYNISr0aEmze/giphy.webp?cid=112e516bj583yd2p34cuzg3zsicfoeokijom4c68tw0zkjvu&rid=giphy.webp&ct=g",
+            "comment": {"1":{
+                "blogcomment": "Hiiii",
+                "timestamp": "29/01/2022 11:48:37"
             }, "2":{
-                "blogcomment": "GOOD ONE!!!"
-            }}, done);
+                "blogcomment": "Yoooooo",
+                "timestamp": "29/01/2022 12:22:07"
+            }},
+            "emoji": {"1":{"emojiCount": 231 }, "2":{"emojiCount": 175}, "3":{"emojiCount": 98}}
+            },
+        
+        
+            "2":{
+            "blogtitle": "Are Aliens real?",
+            "blogcontent": "I never thought Aliens could be real...",
+            "timestamp": "30/01/2022 10:34:46",
+            "gif": "https://media2.giphy.com/media/gHcPh3ehbRGik/giphy.webp?cid=112e516bpll6jg8e3bkezhdzjedxlzxfr7z4eyle2f9fub23&rid=giphy.webp&ct=g",
+            "comment": {"1":{
+                "blogcomment": "HAHAHAHAA",
+                "timestamp": "30/01/2022 11:07:55"
+                
+            }, "2":{
+                "blogcomment": "GOOD ONE!!!",
+                "timestamp": "30/01/2022 11:55:44"
+            }},
+            "emoji": {"1":{"emojiCount": 167 }, "2":{"emojiCount": 134}, "3":{"emojiCount": 122}}
+            },
+        
+            "3":{ 
+            "blogtitle": "My brother believes in Aliens",
+            "blogcontent": "...",
+            "timestamp": "31/01/2022 12:04:22",
+            "gif": "https://media0.giphy.com/media/3oEjI789af0AVurF60/giphy.webp?cid=112e516bf9nnnymdnva57g1ze6cg1c5uj0eje4wjqf2jm5qm&rid=giphy.webp&ct=g",
+            "comment": {"1":{
+                "blogcomment": "Ratio",
+                "timestamp": "31/01/2022 12:12:12"
+            }, "2":{
+                "blogcomment": "It's true I do!!!",
+                "timestamp": "31/01/2022 12:17:10"
+            }},
+            "emoji": {"1":{"emojiCount": 160 }, "2":{"emojiCount": 133}, "3":{"emojiCount": 276}}
+            }
+        }, done)
     });
 
-    test('retrieves a blog emoji reaction by id', (done) => {
-        request(router)
-            .get('/blog/2/emoji/1')
-            .expect(200)
-            .expect({ emojiCount: 67 }, done);
+    test('responds with json', (done) => {
+        request(app)
+        .get('/blog')
+        .expect('Content-Type', /json/, done)
     });
 
-
-
-
-    test('Create a blog post with POST /with status 201', (done) => {
-        request(router)
-        .post('/blog')
-        .expect('Content-Type', /json/)
-        .send({
-            blogtitle: "blog titleeee",
-            blogcontent: "blog contentttt",
-        })
-    
-        .expect((res) => {
-            res.body.blogtitle = "this is a blog title test",
-            res.body.blogcontent = "this is a blog content test"
-        })
-        .expect(201, done)
-
-    });
-
-    test('Create a blog comment with POST /with status 201', (done) => {
-        request(router)
-        .post('/blog/3')
-        .expect('Content-Type', /json/)
-        .send({
-            blogcomment: "this is a blog comment test",
-        })
-    
-        .expect((res) => {
-            res.body.blogcomment = 'this is a blog comment test'
-        })
-        .expect(201, done)
-
-    });
-
-    test('Increase the emoji count by 1', (done) => {
-        request(router)
-        .patch('/blog/1/emoji/2')
-        .expect('Content-Type', /json/)
-        .expect((res) => {
-            {emojiCount: 103}
-        })
+    test('responds with status code 200', (done) => {
+        request(app)
+        .get('/blog')
         .expect(200, done)
-
     });
 
 
-
-
-   /* test('responds to DELETE / with status 204', (done) => {
-        request(router)
-            .delete('/blog/3')
-            .expect(204, done);
-    });
-    */
 });
+
+
+
+
+describe('GET specific blog post', () => {
+
+    test('responds with correct data', (done) => {
+        request(app)
+        .get('/blog/3')
+        .expect({ 
+            "blogtitle": "My brother believes in Aliens",
+            "blogcontent": "...",
+            "timestamp": "31/01/2022 12:04:22",
+            "gif": "https://media0.giphy.com/media/3oEjI789af0AVurF60/giphy.webp?cid=112e516bf9nnnymdnva57g1ze6cg1c5uj0eje4wjqf2jm5qm&rid=giphy.webp&ct=g",
+            "comment": {"1":{
+                "blogcomment": "Ratio",
+                "timestamp": "31/01/2022 12:12:12"
+            }, "2":{
+                "blogcomment": "It's true I do!!!",
+                "timestamp": "31/01/2022 12:17:10"
+            }},
+            "emoji": {"1":{"emojiCount": 160 }, "2":{"emojiCount": 133}, "3":{"emojiCount": 276}}
+            }, done)
+    });
+
+    test('responds with json', (done) => {
+        request(app)
+        .get('/blog/3')
+        .expect('Content-Type', /json/, done)
+    });
+
+    test('responds with status code 200', (done) => {
+        request(app)
+        .get('/blog/3')
+        .expect(200, done)
+    });
+
+    test('if id unknown responds with status code 404', (done) => {
+        request(app)
+        .get('/blog/100')
+        .expect(404, done);
+    });
+
+});
+
+
+describe('GET all comments from a blog post', () => {
+
+    test('responds with correct data', (done) => {
+        request(app)
+        .get('/blog/1/comment')
+        .expect({"1":{
+            "blogcomment": "Hiiii",
+            "timestamp": "29/01/2022 11:48:37"
+        }, "2":{
+            "blogcomment": "Yoooooo",
+            "timestamp": "29/01/2022 12:22:07"
+        }}, done)
+    });
+
+    test('responds with json', (done) => {
+        request(app)
+        .get('/blog/1/comment')
+        .expect('Content-Type', /json/, done)
+    });
+
+    test('responds with status code 200', (done) => {
+        request(app)
+        .get('/blog/1/comment')
+        .expect(200, done)
+    });
+
+    test('if id unknown responds with status code 404', (done) => {
+        request(app)
+        .get('/blog/5/comment')
+        .expect(404, done);
+    });
+
+});
+
+
+
+describe('GET individual comments from blog post', () => {
+
+    test('responds with correct data', (done) => {
+        request(app)
+        .get('/blog/1/comment/1')
+        .expect({
+            "blogcomment": "Hiiii",
+            "timestamp": "29/01/2022 11:48:37"
+          }, done)
+    });
+
+    test('responds with json', (done) => {
+        request(app)
+        .get('/blog/1/comment/1')
+        .expect('Content-Type', /json/, done)
+    });
+
+    test('responds with status code 200', (done) => {
+        request(app)
+        .get('/blog/1/comment/1')
+        .expect(200, done)
+    });
+
+    test('if id unknown responds with status code 404', (done) => {
+        request(app)
+        .get('/blog/2/comment/200')
+        .expect(404, done);
+    });
+
+});
+
+
+describe('GET Emoji from blog', () => {
+
+    test('responds with correct data', (done) => {
+        request(app)
+        .get('/blog/2/emoji/2')
+        .expect( { emojiCount: 134 }, done)
+    });
+
+    test('responds with json', (done) => {
+        request(app)
+        .get('/blog/2/emoji/2')
+        .expect('Content-Type', /json/, done)
+    });
+
+    test('responds with status code 200', (done) => {
+        request(app)
+        .get('/blog/2/emoji/2')
+        .expect(200, done)
+    });
+
+    test('if id unknown responds with status code 404', (done) => {
+        request(app)
+        .get('/blog/2/emoji/100')
+        .expect(404, done);
+    });
+
+});
+
+
+
+//POST 
+
+
+describe('POST Create a blog post', () => {
+
+    test('responds with correct data', (done) => {
+        request(app)
+        .post('/blog')
+        .send({
+            "blogtitle": "this is a create blog title test",
+            "blogcontent": "this is a create blog content test"
+          })
+        .expect({
+            blogtitle: "this is a create blog title test",
+            blogcontent: "this is a create blog content test",
+            timestamp: dayjs().format('DD/MM/YYYY ' + 'hh:mm:ss').toString(),
+            comment: "",
+            emoji: {
+              "1": {
+                "emojiCount": 0
+              },
+              "2": {
+                "emojiCount": 0
+              },
+              "3": {
+                "emojiCount": 0
+              }
+            }
+          }, done)
+    });
+
+    test('responds with json', (done) => {
+        request(app)
+        .post('/blog')
+        .send({
+            blogtitle: "this is a create blog title test",
+        blogcontent: "this is a create blog content test"
+          })
+        .expect('Content-Type', /json/, done)
+    });
+
+    test('responds with status code 200', (done) => {
+        request(app)
+        .post('/blog')
+        .send({
+            blogtitle: "this is a create blog title test",
+            blogcontent: "this is a create blog content test"
+          })
+        .expect(201, done)
+    });
+
+    test('if no requested title or content responds with status code 404', (done) => {
+        request(app)
+        .post('/blog')
+        .send({
+          })
+        .expect(404, done);
+    });
+
+});
+
+
+describe('POST Create a comment', () => {
+
+    test('responds with correct data', (done) => {
+        request(app)
+        .post('/blog/3')
+        .send({blogcomment: "this is a create blog comment test"})
+        .expect({
+            blogcomment: "this is a create blog comment test",
+            timestamp: dayjs().format('DD/MM/YYYY ' + 'hh:mm:ss').toString()
+          }, done)
+    });
+
+    test('responds with json', (done) => {
+        request(app)
+        .post('/blog/3')
+        .send({blogcomment: "this is a create blog comment test"})
+        .expect('Content-Type', /json/, done)
+    });
+
+    test('responds with status code 200', (done) => {
+        request(app)
+        .post('/blog/3')
+        .send({blogcomment: "this is a create blog comment test"})
+        .expect(201, done)
+    });
+
+    test('if no requested comment responds with status code 404', (done) => {
+        request(app)
+        .post('/blog/3')
+        .send({
+          })
+        .expect(404, done);
+    });
+
+});
+
+
+
+// PATCH 
+
+describe('PATCH Edit a blog post', () => {
+
+    test('responds with correct data', (done) => {
+        request(app)
+        .patch('/blog/2')
+        .send({blogcontent: "this is a blog content test", blogtitle: "this is a blog title test"})
+        .expect({
+            blogtitle: 'this is a blog title test',
+            blogcontent: 'this is a blog content test',
+            timestamp: '30/01/2022 10:34:46',
+            gif: 'https://media2.giphy.com/media/gHcPh3ehbRGik/giphy.webp?cid=112e516bpll6jg8e3bkezhdzjedxlzxfr7z4eyle2f9fub23&rid=giphy.webp&ct=g',
+            comment: {
+              '1': {
+                blogcomment: 'HAHAHAHAA',
+                timestamp: '30/01/2022 11:07:55'
+              },
+              '2': {
+                blogcomment: 'GOOD ONE!!!',
+                timestamp: '30/01/2022 11:55:44'
+              }
+            },
+            emoji: {
+              '1': { emojiCount: 167 },
+              '2': { emojiCount: 134 },
+              '3': { emojiCount: 122 }
+            }
+          }, done)
+    });
+
+    test('responds with json', (done) => {
+        request(app)
+        .patch('/blog/2')
+        .send({blogcontent: "this is a blog content test", blogtitle: "this is a blog title test"})
+        .expect('Content-Type', /json/, done)
+    });
+
+    test('responds with status code 200', (done) => {
+        request(app)
+        .patch('/blog/2')
+        .send({blogcontent: "this is a blog content test", blogtitle: "this is a blog title test"})
+        .expect(200, done)
+    });
+
+});
+
+describe('PATCH Edit a comment', () => {
+
+    test('responds with correct data', (done) => {
+        request(app)
+        .patch('/blog/1/comment/1')
+        .send({blogcomment: "this is a blog comment test"})
+        .expect({
+            "blogcomment": "this is a blog comment test",
+            "timestamp": "29/01/2022 11:48:37"
+          }, done)
+    });
+
+    test('responds with json', (done) => {
+        request(app)
+        .patch('/blog/1/comment/1')
+        .send({blogcomment: "this is a blog comment test"})
+        .expect('Content-Type', /json/, done)
+    });
+
+    test('responds with status code 200', (done) => {
+        request(app)
+        .patch('/blog/1/comment/1')
+        .send({blogcomment: "this is a blog comment test"})
+        .expect(200, done)
+    });
+
+});
+
+
+describe('PATCH Increase the emoji count by 1', () => {
+
+    test('responds with correct data', (done) => {
+        request(app)
+        .patch('/blog/1/emoji/2')
+        .expect({emojiCount: 176}, done)
+    });
+
+    test('responds with json', (done) => {
+        request(app)
+        .patch('/blog/1/emoji/2')
+        .expect('Content-Type', /json/, done)
+    });
+
+    test('responds with status code 200', (done) => {
+        request(app)
+        .patch('/blog/1/emoji/2')
+        .expect(200, done)
+    });
+
+});
+
+
+
+
+// DELETE
+
+describe('DELETE blog post', () => {
+    test('responds with status code 204', (done) => {
+        request(app)
+        .delete('/blog/1')
+        .expect(204, done);
+    });
+});
+
+
+describe('DELETE comment on blog post', () => {
+    test('responds with status code 204', (done) => {
+        request(app)
+        .delete('/blog/2/comment/2')
+        .expect(204, done);
+    });
+});
+

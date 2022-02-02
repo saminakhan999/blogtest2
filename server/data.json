@@ -2,41 +2,48 @@
     "1":{
     "blogtitle": "Ostriches dont exist",
     "blogcontent": "Scientists recently discovered that ostriches are just a large form of pigeon....",
-    "date": "Sat, 29 Jan 2022 11:45:33 GMT",
-    "gif": "",
+    "timestamp": "29/01/2022 11:45:33",
+    "gif": "https://media4.giphy.com/media/l1J9znYNISr0aEmze/giphy.webp?cid=112e516bj583yd2p34cuzg3zsicfoeokijom4c68tw0zkjvu&rid=giphy.webp&ct=g",
     "comment": {"1":{
-        "blogcomment": "Hiiii"
+        "blogcomment": "Hiiii",
+        "timestamp": "29/01/2022 11:48:37"
     }, "2":{
-        "blogcomment": "Yoooooo"
+        "blogcomment": "Yoooooo",
+        "timestamp": "29/01/2022 12:22:07"
     }},
-    "emoji": {"1":{"emojiCount": 100 }, "2":{"emojiCount": 33}, "3":{"emojiCount": 11}}
+    "emoji": {"1":{"emojiCount": 231 }, "2":{"emojiCount": 175}, "3":{"emojiCount": 98}}
     },
 
 
     "2":{
     "blogtitle": "Are Aliens real?",
     "blogcontent": "I never thought Aliens could be real...",
-    "date": "Sun, 30 Jan 2022 10:34:46 GMT",
-    "gif": "",
+    "timestamp": "30/01/2022 10:34:46",
+    "gif": "https://media2.giphy.com/media/gHcPh3ehbRGik/giphy.webp?cid=112e516bpll6jg8e3bkezhdzjedxlzxfr7z4eyle2f9fub23&rid=giphy.webp&ct=g",
     "comment": {"1":{
-        "blogcomment": "HAHAHAHAA"
+        "blogcomment": "HAHAHAHAA",
+        "timestamp": "30/01/2022 11:07:55"
+        
     }, "2":{
-        "blogcomment": "GOOD ONE!!!"
+        "blogcomment": "GOOD ONE!!!",
+        "timestamp": "30/01/2022 11:55:44"
     }},
-    "emoji": {"1":{"emojiCount": 67 }, "2":{"emojiCount": 70}, "3":{"emojiCount": 0}}
+    "emoji": {"1":{"emojiCount": 167 }, "2":{"emojiCount": 134}, "3":{"emojiCount": 122}}
     },
 
     "3":{ 
     "blogtitle": "My brother believes in Aliens",
     "blogcontent": "...",
-    "date": "Mon, 31 Jan 2022 12:04:22 GMT",
-    "gif": "",
+    "timestamp": "31/01/2022 12:04:22",
+    "gif": "https://media0.giphy.com/media/3oEjI789af0AVurF60/giphy.webp?cid=112e516bf9nnnymdnva57g1ze6cg1c5uj0eje4wjqf2jm5qm&rid=giphy.webp&ct=g",
     "comment": {"1":{
-        "blogcomment": "Testing"
+        "blogcomment": "Ratio",
+        "timestamp": "31/01/2022 12:12:12"
     }, "2":{
-        "blogcomment": "I am troll"
+        "blogcomment": "It's true I do!!!",
+        "timestamp": "31/01/2022 12:17:10"
     }},
-    "emoji": {"1":{"emojiCount": 160 }, "2":{"emojiCount": 3}, "3":{"emojiCount": 566}}
+    "emoji": {"1":{"emojiCount": 160 }, "2":{"emojiCount": 133}, "3":{"emojiCount": 276}}
     }
 }
 
