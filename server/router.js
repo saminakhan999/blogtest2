@@ -3,10 +3,8 @@ const blog = require("./data.json")
 const router = express.Router();
 const dayjs = require("dayjs");
 var relativeTime = require('dayjs/plugin/relativeTime');
-const { Router } = require("express");
 dayjs.extend(relativeTime)
 const Fuse = require('fuse.js')
-
 
 
 router.get("/", (req,res) => {
