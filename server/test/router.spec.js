@@ -18,7 +18,7 @@ describe('GET all blog posts', () => {
             "blogtitle": "Ostriches dont exist",
             "blogcontent": "Scientists recently discovered that ostriches are just a large form of pigeon....",
             "timestamp": "29/01/2022 11:45:33",
-            "gif": "",
+            "gif": "./ostrich.gif",
             "comment": {"1":{
                 "blogcomment": "Hiiii",
                 "timestamp": "29/01/2022 11:48:37"
