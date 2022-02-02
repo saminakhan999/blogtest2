@@ -196,7 +196,7 @@ router.delete('/blog/:id/comment/:bid', (req,res) => {
 
 // Search function
 
-router.get("/blog/search", (req,res) =>{
+router.get("/search", (req,res) =>{
     let query = req.query.q;
     query = query.replace(/\+/g, ' ').toLowerCase().trim();
     allBlogs = Object.values(blog);
