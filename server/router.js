@@ -160,10 +160,20 @@ router.patch('/blog/:id/comment/:bid', (req,res) => {
 
 //Increase emoji count by 1 
 
-router.patch("/blog/:id/emoji/:eid", (req, res) => {
+router.patch("/blog/:id/emoji/:eid/plus", (req, res) => {
     const thisBlog = blog[req.params.id]
     const emoji = thisBlog.emoji 
     emojiCount = emoji[req.params.eid].emojiCount++
+    res.json(emoji[req.params.eid]) 
+}) 
+
+
+//Decrease emoji count by 1 
+
+router.patch("/blog/:id/emoji/:eid/minus", (req, res) => {
+    const thisBlog = blog[req.params.id]
+    const emoji = thisBlog.emoji 
+    emojiCount = emoji[req.params.eid].emojiCount--
     res.json(emoji[req.params.eid]) 
 }) 
 

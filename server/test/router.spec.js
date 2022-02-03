@@ -449,24 +449,46 @@ describe('PATCH Increase the emoji count by 1', () => {
 
     test('responds with correct data', (done) => {
         request(app)
-        .patch('/blog/1/emoji/2')
+        .patch('/blog/1/emoji/2/plus')
         .expect({emojiCount: 176}, done)
     });
 
     test('responds with json', (done) => {
         request(app)
-        .patch('/blog/1/emoji/2')
+        .patch('/blog/1/emoji/2/plus')
         .expect('Content-Type', /json/, done)
     });
 
     test('responds with status code 200', (done) => {
         request(app)
-        .patch('/blog/1/emoji/2')
+        .patch('/blog/1/emoji/2/plus')
         .expect(200, done)
     });
 
 });
 
+
+describe('PATCH Decrease the emoji count by 1', () => {
+
+    test('responds with correct data', (done) => {
+        request(app)
+        .patch('/blog/1/emoji/1/minus')
+        .expect({emojiCount: 230}, done)
+    });
+
+    test('responds with json', (done) => {
+        request(app)
+        .patch('/blog/1/emoji/1/minus')
+        .expect('Content-Type', /json/, done)
+    });
+
+    test('responds with status code 200', (done) => {
+        request(app)
+        .patch('/blog/1/emoji/1/minus')
+        .expect(200, done)
+    });
+
+});
 
 
 
