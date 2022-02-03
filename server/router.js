@@ -83,7 +83,7 @@ router.post("/blog", (req,res) => {
             blogcontent: req.body.blogcontent,
             timestamp: dayjs().format('DD/MM/YYYY ' + 'hh:mm:ss').toString(),
             gif: req.body.gif,
-            comment: ''
+            comment: {}
         }
         if(!req.body.blogtitle || !req.body.blogcontent) { throw new Error(`Please enter all required fields!`)}
         const emojiOne = {emojiCount: 0}
