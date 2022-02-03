@@ -205,7 +205,10 @@ router.get("/search", (req,res) =>{
       } 
       const fuse = new Fuse(allBlogs, options)
       const result = fuse.search(query)
-      res.json(result[0])
+      if(result.length == 0){
+          res.status(404).json("No search results found")}
+          else{
+      res.json(result[0])}
 }) 
 
 
