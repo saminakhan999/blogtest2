@@ -115,8 +115,11 @@ router.post("/blog/:id",(req,res)=>{
             timestamp: dayjs().format('DD/MM/YYYY ' + 'hh:mm:ss').toString(),
         }
         if(!req.body.blogcomment) { throw new Error(`Please enter a comment!`)}
-        let id = Math.max(...Object.keys(thisComment)) +1
-
+        if  (!Object.keys(thisComment).length) {
+            let id = 1
+        } else {
+            let id = Math.max(...Object.keys(thisComment)) +1
+        }
         thisComment[id] = newComment
 
         res.status(201).json(newComment)
