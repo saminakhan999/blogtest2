@@ -287,7 +287,7 @@ describe('POST Create a blog post', () => {
             blogtitle: "this is a create blog title test",
             blogcontent: "this is a create blog content test",
             timestamp: dayjs().format('DD/MM/YYYY ' + 'hh:mm:ss').toString(),
-            comment: "",
+            comment: {},
             emoji: {
               "1": {
                 "emojiCount": 0
