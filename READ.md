@@ -6,12 +6,6 @@
   - [Installation](#installation)
   - [Usage](#usage)
 - [Technologies](#technologies)
-- [Bugs](#bugs)
-- [Wins & Challenges](#wins--challenges)
-  - [Wins](#wins)
-  - [Challenges](#challenges)
-- [Goals for the Future!](#goals-for-the-future)
-
 ## Installation & Usage
 
 ### Installation
@@ -33,44 +27,17 @@
 - While in server run `npm test` to launch the test suite
 
 ]
-## Technologies used
-
--
-
-## Changelog
-
--
-
-## Bugs
-
--
-
-## Wins & Challenges
-
-### Wins
-
--
-
-### Challenges
-
--
-
-## Goals for the Future!
-
-- On the blog page don't include the displayed blog as in 'Other Blogs'
--
-
-
-
-
-
-
-
-
-
-
-
-
+#### technologies
+- express
+- cors
+- concurrently -DEV
+- watchify -DEV
+- jest -DEV
+- supertest -DEV
+- [nodemon -DEV
+- jest-fetch-mock -DEV
+- tailwindCSS -DEV
+- Fuse - DEV
 
 
 # Supercoders server API
@@ -83,15 +50,4 @@
 - [ ] Data stored as json with an ID,blogtitle,blogcontent,gif,date,emoji and comments
 - [ ] 100% test coverage
 
-### technologies
-- [x] express
-- [x] cors
-- [x] concurrently -DEV
-- [x] watchify -DEV
-- [x] jest -DEV
-- [x] supertest -DEV
-- [x] nodemon -DEV
-- [x] jest-fetch-mock -DEV
-- [x] tailwindCSS -DEV
-- [x] Fuse - DEV
 
