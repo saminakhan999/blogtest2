@@ -47,7 +47,7 @@ describe('GET all blog posts', () => {
         
             "3":{ 
             "blogtitle": "My brother believes in Aliens",
-            "blogcontent": "...",
+            "blogcontent": "I love the guy but he's freaking me out!!!",
             "timestamp": "31/01/2022 12:04:22",
             "gif": "https://media0.giphy.com/media/3oEjI789af0AVurF60/giphy.webp?cid=112e516bf9nnnymdnva57g1ze6cg1c5uj0eje4wjqf2jm5qm&rid=giphy.webp&ct=g",
             "comment": {"1":{
@@ -58,7 +58,50 @@ describe('GET all blog posts', () => {
                 "timestamp": "31/01/2022 12:17:10"
             }},
             "emoji": {"1":{"emojiCount": 160 }, "2":{"emojiCount": 133}, "3":{"emojiCount": 276}}
-            }
+            },
+        
+            "4":{
+                "blogtitle": "Richard",
+                "blogcontent": "Richard loves Linux",
+                "timestamp": "02/02/2022 09:22:42",
+                "gif": "https://media2.giphy.com/media/3og0ICG4WxdKSRzE3K/giphy.gif?cid=112e516bwsceaq2go70nr3dryomhzmop52b7y62lyxvm09zt&rid=giphy.gif&ct=g",
+                "comment": {"1":{
+                    "blogcomment": "I have a Linux joke... But some of you would not apt-get it.",
+                    "timestamp": "02/02/2022 10:11:11"
+                }},
+                "emoji": {"1":{"emojiCount": 212 }, "2":{"emojiCount": 245}, "3":{"emojiCount": 247}}
+                },
+        
+            "5":{
+                "blogtitle": "Noah",
+                "blogcontent": "Noah loves writing blogs",
+                "timestamp": "03/02/2022 12:02:19",
+                "gif": "https://media1.giphy.com/media/yNs2a0jRkYxy6191B2/giphy.gif?cid=112e516bjbj5bi7fb42f1r7xu6qddj4zzq0niqgu9lll2fkg&rid=giphy.gif&ct=g",
+                "comment": {},
+                "emoji": {"1":{"emojiCount": 102 }, "2":{"emojiCount": 182}, "3":{"emojiCount": 193}}
+                },
+        
+            "6":{
+                "blogtitle": "Hamza loves warm milk",
+                "blogcontent": "Hamza loves warm milk because when he was a child cold milk felt cold to him",
+                "timestamp": "03/02/2022 13:11:47",
+                "gif": "https://media2.giphy.com/media/8mkykXIicXOVms2xYE/giphy.mp4?cid=112e516bxsr3egjwuhnwgxz603h2qdhjvoq6628n8ik6v69c&rid=giphy.mp4&ct=g",
+                "comment": {"1":{
+                        "blogcomment": "I'm so sorry to hear that",
+                        "timestamp": "03/02/2022 15:34:01"
+                }},
+                "emoji": {"1":{"emojiCount": 443 }, "2":{"emojiCount": 192}, "3":{"emojiCount": 139}}
+                },
+        
+            "7":{
+                "blogtitle": "Samina IS yoshi",
+                "blogcontent": "She's a green machine ready for action",
+                "timestamp": "04/02/2022 10:19:58",
+                "gif": "https://media2.giphy.com/media/C51woXfgJdug/giphy.gif?cid=112e516btys3hvdudc32py3wwcdylk62b183cr3q0vjlq2b9&rid=giphy.gif&ct=g",
+                "comment": {},
+                "emoji": {"1":{"emojiCount": 128 }, "2":{"emojiCount": 384}, "3":{"emojiCount": 294}}
+                }
+        
         }, done)
     });
 
@@ -87,7 +130,7 @@ describe('GET specific blog post', () => {
         .get('/blog/3')
         .expect({ 
             "blogtitle": "My brother believes in Aliens",
-            "blogcontent": "...",
+            "blogcontent": "I love the guy but he's freaking me out!!!",
             "timestamp": "31/01/2022 12:04:22",
             "gif": "https://media0.giphy.com/media/3oEjI789af0AVurF60/giphy.webp?cid=112e516bf9nnnymdnva57g1ze6cg1c5uj0eje4wjqf2jm5qm&rid=giphy.webp&ct=g",
             "comment": {"1":{
@@ -150,7 +193,7 @@ describe('GET all comments from a blog post', () => {
 
     test('if id unknown responds with status code 404', (done) => {
         request(app)
-        .get('/blog/5/comment')
+        .get('/blog/9/comment')
         .expect(404, done);
     });
 
