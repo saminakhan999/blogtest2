@@ -47,8 +47,8 @@
     },
 
     "4":{
-        "blogtitle": "Richard",
-        "blogcontent": "Richard loves Linux",
+        "blogtitle": "Richard loves Linux",
+        "blogcontent": "Richard REALLY REALLY loves Linux",
         "timestamp": "02/02/2022 09:22:42",
         "gif": "https://media2.giphy.com/media/3og0ICG4WxdKSRzE3K/giphy.gif?cid=112e516bwsceaq2go70nr3dryomhzmop52b7y62lyxvm09zt&rid=giphy.gif&ct=g",
         "comment": {"1":{
@@ -59,8 +59,8 @@
         },
 
     "5":{
-        "blogtitle": "Noah",
-        "blogcontent": "Noah loves writing blogs",
+        "blogtitle": "Noah loves writing blogs",
+        "blogcontent": "He's sooo good at it check out his blog!",
         "timestamp": "03/02/2022 12:02:19",
         "gif": "https://media1.giphy.com/media/yNs2a0jRkYxy6191B2/giphy.gif?cid=112e516bjbj5bi7fb42f1r7xu6qddj4zzq0niqgu9lll2fkg&rid=giphy.gif&ct=g",
         "comment": {},
@@ -71,7 +71,7 @@
         "blogtitle": "Hamza loves warm milk",
         "blogcontent": "Hamza loves warm milk because when he was a child cold milk felt cold to him",
         "timestamp": "03/02/2022 13:11:47",
-        "gif": "https://media1.giphy.com/media/pbEqpHhDLmKNA7yUye/giphy.mp4?cid=112e516bphdxnms2kjjrxbsre67ybsy9o41v6305l1d2jc3b&rid=giphy.mp4&ct=g",
+        "gif": "https://media1.giphy.com/media/pbEqpHhDLmKNA7yUye/giphy.gif?cid=112e516bphdxnms2kjjrxbsre67ybsy9o41v6305l1d2jc3b&rid=giphy.gif&ct=g",
         "comment": {"1":{
                 "blogcomment": "I'm so sorry to hear that",
                 "timestamp": "03/02/2022 15:34:01"
