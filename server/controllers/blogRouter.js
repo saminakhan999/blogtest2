@@ -1,15 +1,14 @@
 const express = require("express");
-const blog = require("./data.json");
+const blog = require("../data.json");
 const router = express.Router();
 const dayjs = require("dayjs");
 var relativeTime = require("dayjs/plugin/relativeTime");
 dayjs.extend(relativeTime);
-const Fuse = require("fuse.js");
 const fs = require("fs");
 
 function writeToDisk(data) {
   const tmp = JSON.stringify(data);
-  fs.writeFile("./server/data.json", tmp, (err) => {
+  fs.writeFile("./db/data.json", tmp, (err) => {
     if (err) {
       throw err;
     }
@@ -17,19 +16,19 @@ function writeToDisk(data) {
   });
 }
 
-router.get("/", (req, res) => {
-  res.json("Hello world");
-});
+// router.get("/", (req, res) => {
+//   res.json("Hello world");
+// });
 
 //Access all blog posts
 
-router.get("/blog", (req, res) => {
+router.get("/", (req, res) => {
   res.json(blog);
 });
 
 //Access specific blog post //
 
-router.get("/blog/:id", (req, res) => {
+router.get("/:id", (req, res) => {
   try {
     let requestedBlog = blog[req.params.id];
     if (!requestedBlog) {
@@ -43,7 +42,7 @@ router.get("/blog/:id", (req, res) => {
 
 //Access comments for a blog post
 
-router.get("/blog/:id/comment", (req, res) => {
+router.get("/:id/comment", (req, res) => {
   try {
     let requestedBlog = blog[req.params.id];
     if (!requestedBlog) {
@@ -58,7 +57,7 @@ router.get("/blog/:id/comment", (req, res) => {
 
 //Access individual comments for a blog post
 
-router.get("/blog/:id/comment/:bid", (req, res) => {
+router.get("/:id/comment/:bid", (req, res) => {
   try {
     const thisBlog = blog[req.params.id];
     const comments = thisBlog.comment;
@@ -74,7 +73,7 @@ router.get("/blog/:id/comment/:bid", (req, res) => {
 
 //Access Emoji for a blog post
 
-router.get("/blog/:id/emoji/:eid", (req, res) => {
+router.get("/:id/emoji/:eid", (req, res) => {
   try {
     const thisEmoji = blog[req.params.id].emoji[req.params.eid];
     if (!thisEmoji) {
@@ -88,7 +87,7 @@ router.get("/blog/:id/emoji/:eid", (req, res) => {
 
 //Create Blog Entry
 
-router.post("/blog", (req, res) => {
+router.post("/", (req, res) => {
   try {
     let id = Math.max(...Object.keys(blog)) + 1;
 
@@ -125,7 +124,7 @@ router.post("/blog", (req, res) => {
 
 //Create Blog Comment
 
-router.post("/blog/:id", (req, res) => {
+router.post("/:id", (req, res) => {
   try {
     const thisBlog = blog[req.params.id];
     const thisComment = thisBlog.comment;
@@ -156,7 +155,7 @@ router.post("/blog/:id", (req, res) => {
 
 // Edit a blog post
 
-router.patch("/blog/:id", (req, res) => {
+router.patch("/:id", (req, res) => {
   let upBlog = req.body;
   const thisBlog = blog[req.params.id];
   thisBlog.blogtitle = upBlog.blogtitle ? upBlog.blogtitle : thisBlog.blogtitle;
@@ -172,7 +171,7 @@ router.patch("/blog/:id", (req, res) => {
 
 // Edit a Comment
 
-router.patch("/blog/:id/comment/:bid", (req, res) => {
+router.patch("/:id/comment/:bid", (req, res) => {
   let upBlogComment = req.body;
   const thisBlog = blog[req.params.id];
   const comments = thisBlog.comment;
@@ -188,7 +187,7 @@ router.patch("/blog/:id/comment/:bid", (req, res) => {
 
 //Increase emoji count by 1
 
-router.patch("/blog/:id/emoji/:eid/plus", (req, res) => {
+router.patch("/:id/emoji/:eid/plus", (req, res) => {
   const thisBlog = blog[req.params.id];
   const emoji = thisBlog.emoji;
   emojiCount = emoji[req.params.eid].emojiCount++;
@@ -199,7 +198,7 @@ router.patch("/blog/:id/emoji/:eid/plus", (req, res) => {
 
 //Decrease emoji count by 1
 
-router.patch("/blog/:id/emoji/:eid/minus", (req, res) => {
+router.patch("/:id/emoji/:eid/minus", (req, res) => {
   const thisBlog = blog[req.params.id];
   const emoji = thisBlog.emoji;
   emojiCount = emoji[req.params.eid].emojiCount--;
@@ -210,7 +209,7 @@ router.patch("/blog/:id/emoji/:eid/minus", (req, res) => {
 
 //Delete a specific blog post
 
-router.delete("/blog/:id", (req, res) => {
+router.delete("/:id", (req, res) => {
   let thisBloggg = blog[req.params.id];
   for (member in thisBloggg) {
     delete thisBloggg[member];
@@ -223,7 +222,7 @@ router.delete("/blog/:id", (req, res) => {
 
 // Delete a specific Comment
 
-router.delete("/blog/:id/comment/:bid", (req, res) => {
+router.delete("/:id/comment/:bid", (req, res) => {
   const thisBlog = blog[req.params.id];
   const comments = thisBlog.comment;
   let oneComment = comments[req.params.bid];
@@ -235,24 +234,6 @@ router.delete("/blog/:id/comment/:bid", (req, res) => {
   res.status(204).json("this comment has been deleted");
 
   writeToDisk(blog);
-});
-
-// Search function
-
-router.get("/search", (req, res) => {
-  let query = req.query.q;
-  query = query.replace(/\+/g, " ").toLowerCase().trim();
-  allBlogs = Object.values(blog);
-  const options = {
-    keys: ["blogtitle"],
-  };
-  const fuse = new Fuse(allBlogs, options);
-  const result = fuse.search(query);
-  if (result.length == 0) {
-    res.status(404).json("No search results found");
-  } else {
-    res.json(result[0]);
-  }
 });
 
 module.exports = router;
