@@ -1,0 +1,28 @@
+version: "3"
+services:
+  api:
+    image: node:latest
+    working_dir: /code
+    ports:
+      - 3000:3000
+    environment:
+      - DB_NAME=admin_details
+      - DB_CONNECTION=mongodb://noahp:password@db:27017
+    depends_on:
+      - db
+    volumes:
+      - type: bind
+        source: ./server
+        target: /code
+    command: bash -c "npm install && npm run dev"
+  db:
+    image: mongo:latest
+    volumes:
+      - "dbdata:/var/lib/postgresql/data"
+      - "./db/seeds.js:/docker-entrypoint-initdb.d/seeds.js:ro"
+    environment:
+      - MONGO_INITDB_ROOT_USERNAME=noahp
+      - MONGO_INITDB_ROOT_PASSWORD=password
+      - MONGO_INITDB_DATABASE=admin_details
+volumes:
+  dbdata:
