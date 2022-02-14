@@ -50,9 +50,12 @@ class Admin {
           .collection("admin")
           .find({ username: { $eq: username } })
           .toArray();
+        if (!adminData) {
+          throw new Error("No admin with given username");
+        }
         const admin = new Admin({
           username: adminData[0].username,
-          password: adminData[0].password_digest,
+          password_digest: adminData[0].password_digest,
           id: adminData[0]._id,
         });
         res(admin);

@@ -16,8 +16,12 @@ router.get("/", async (req, res) => {
 });
 
 router.get("/:username", async (req, res) => {
-  const admin = await Admin.findByUsername(req.params.username);
-  res.json(admin);
+  try {
+    const admin = await Admin.findByUsername(req.params.username);
+    res.json(admin);
+  } catch (err) {
+    res.status(404).json({ err: "No admin wit given username" });
+  }
 });
 
 router.post("/register", verifyToken, async (req, res) => {
@@ -28,9 +32,11 @@ router.post("/register", verifyToken, async (req, res) => {
       username: req.body.username.toLowerCase(),
       password: hashed,
     });
-    res.status(201).json({ msg: "Admin created." });
+    res
+      .status(201)
+      .json({ msg: `Admin created. Username: ${req.body.username}` });
   } catch (err) {
-    res.status(500).json({ err: "Other Error" });
+    res.status(500).json({ err: "Failed registration" });
   }
 });
 
@@ -63,7 +69,7 @@ router.post("/login", async (req, res) => {
 
 router.patch("/newpassword", verifyToken, async (req, res) => {
   try {
-    const admin = await Admin.findByUsername(req.body.username);
+    const admin = await Admin.findByUsername(req.body.username.toLowerCase());
     if (!admin) {
       throw new Error("No admin with given username");
     }
@@ -72,21 +78,24 @@ router.patch("/newpassword", verifyToken, async (req, res) => {
     await admin.update(hashed);
     res.status(200).json({ msg: "Password changed successfully" });
   } catch (err) {
-    res.status(500).json({ err });
+    res.status(500).json({ err: "Error updating password" });
   }
 });
 
 // Add verifyOG as a callback to check admin is of appropriate rank
 router.delete("/abolish/:username", verifyToken, async (req, res) => {
   try {
-    const badmin = await Admin.findByUsername(req.params.username);
-    if (!badmin) {
-      throw new Error("No admin with given username");
-    }
+    const badmin = await Admin.findByUsername(
+      req.params.username.toLowerCase()
+    );
     await badmin.destroy();
-    res.status(204).json({ msg: `${req.params.username} removed as admin` });
+    res
+      .status(204)
+      .json({ msg: `${req.params.username.toLowerCase()} removed as admin` });
   } catch (err) {
-    res.status(500).json({ err });
+    res.status(500).json({
+      err: `No admin with username ${req.params.username.toLowerCase()}`,
+    });
   }
 });
 
