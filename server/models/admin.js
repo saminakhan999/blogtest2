@@ -50,6 +50,9 @@ class Admin {
           .collection("admin")
           .find({ username: { $eq: username } })
           .toArray();
+        if (!adminData) {
+          throw new Error("No admin with given username");
+        }
         const admin = new Admin({
           username: adminData[0].username,
           password_digest: adminData[0].password_digest,
@@ -58,6 +61,39 @@ class Admin {
         res(admin);
       } catch (err) {
         rej(`Error retrieving admin: ${err}`);
+      }
+    });
+  }
+
+  update(newPassword) {
+    return new Promise(async (res, rej) => {
+      try {
+        const db = await init();
+        const updatedAdminData = await db
+          .collection("admin")
+          .findOneAndUpdate(
+            { username: { $eq: this.username } },
+            { $set: { password_digest: newPassword } },
+            { returnNewDocument: true }
+          );
+        const updatedAdmin = new Admin(updatedAdminData);
+        res(updatedAdmin);
+      } catch (err) {
+        rej(`Error updating admin details: ${err}`);
+      }
+    });
+  }
+
+  destroy() {
+    return new Promise(async (res, rej) => {
+      try {
+        const db = await init();
+        await db
+          .collection("admin")
+          .deleteOne({ username: { $eq: this.username } });
+        res("Admin deleted");
+      } catch (err) {
+        rej(`Error deleting admin: ${err}`);
       }
     });
   }
